@@ -53,10 +53,10 @@ internal class PerformVersionCheck {
                 return
             }
         }
-        let versionInfo = SSVersionInfo(isAppUpdateAvailable: !version.elementsEqual(appStoreVersion), appReleaseNote: result?.results?.first?.releaseNotes, appVersion: appStoreVersion, appID: result?.results?.first?.trackId, appURL: result?.results?.first?.trackViewUrl)
+        let versionInfo = SSVersionInfo(isAppUpdateAvailable: appStoreVersion > version, appReleaseNote: result?.results?.first?.releaseNotes, appVersion: appStoreVersion, appID: result?.results?.first?.trackId, appURL: result?.results?.first?.trackViewUrl)
         completion(versionInfo)
         if SSAppUpdater.shared.showDefaultAlert {
-            if !(version.elementsEqual(appStoreVersion)) {
+            if appStoreVersion > version {
                 ///version are different
                 if SSAppUpdater.shared.skipVersionAllow, let skipVersion = UserDefaults.skipVersion, skipVersion == appStoreVersion {
                     return
